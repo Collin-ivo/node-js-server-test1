@@ -11,7 +11,7 @@ let server = new http.Server(function(req, res) {
     });
 
     req.on('end', () => {// Информации больше нет - передаём её дальше.
-        routing.define(req, res, jsonString); // Функцию define мы ещё не создали.
+        routing.define(req, res, jsonString);
     });
 });
 

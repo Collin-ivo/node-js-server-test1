@@ -8,8 +8,7 @@ const define = function(req, res, postData) {
     const urlParsed = url.parse(req.url, true);
     let path = urlParsed.pathname;
 
-    // Теперь записываем полный путь к server.js. Мне это особенно нужно, так как сервер будет
-    // висеть в systemd, и путь, о котором он будет думать, будет /etc/systemd/system/...
+    // Теперь записываем полный путь к server.js.
     const prePath = __dirname;
 
     // До этого мы уже получили path и prePath. Теперь осталось понять, какие запросы
@@ -19,7 +18,7 @@ const define = function(req, res, postData) {
         console.log(path);
         if(path === 'favicon.ico') {
             // Если нужна фавиконка - возвращаем её, путь для неё всегда будет 'favicon.ico'
-            // Получается, если добавить в начале prePath, будет: '/var/www/html/nodejs/routing/favicon.ico'.
+
             // Не забываем про return, чтобы сервер даже не пытался искать файлы дальше.
             let readStream = fs.createReadStream(prePath+path);
             readStream.pipe(res);
@@ -76,7 +75,6 @@ const define = function(req, res, postData) {
         let filePath = prePath+'/static'+path + '/index.html';
         fs.readFile(filePath, 'utf-8', (err, html) => {
             // Если не находим файл, пытаемся загрузить нашу страницу 404 и отдать её.
-            // Если находим — отдаём, народ ликует и устраивает пир во имя царя-батюшки.
             if(err) {
                 let nopath = `${prePath}/nopage/404.html`;
                 fs.readFile(nopath, (err , html) => {
